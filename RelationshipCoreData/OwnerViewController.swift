@@ -60,7 +60,7 @@ class OwnerViewController: UIViewController {
         }
         let fetchUserRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
         do {
-            if let resultUser =  try appDelegate.persistentContainer.viewContext.fetch(fetchUserRequest) as? [User] {
+            if let resultUser =  try appDelegate.coreDataStack.managedObjectContext.fetch(fetchUserRequest) as? [User] {
                 self.userTableData = resultUser
             }
         } catch {
@@ -99,18 +99,13 @@ class OwnerViewController: UIViewController {
                 return
         }
         
-        guard let userEntity = NSEntityDescription.entity(forEntityName: "User", in: appDelegate.persistentContainer.viewContext) else {
+        guard let userEntity = NSEntityDescription.entity(forEntityName: "User", in: appDelegate.coreDataStack.managedObjectContext) else {
             fatalError("Could not find entity User")
         }
-            let device_user = User.init(entity: userEntity, insertInto: appDelegate.persistentContainer.viewContext)
+            let device_user = User.init(entity: userEntity, insertInto: appDelegate.coreDataStack.managedObjectContext)
             device_user.name = Name
         
-        do {
-            try appDelegate.persistentContainer.viewContext.save()
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
-        
+        appDelegate.coreDataStack.saveMainContext()
         self.LoadOwnerData()
         self.ownerTableView.reloadData()
      }
@@ -171,7 +166,7 @@ extension OwnerViewController: UITableViewDelegate,UITableViewDataSource {
         }
         if editingStyle == .delete {
             let person = self.userTableData[indexPath.row]
-            appDelegate.persistentContainer.viewContext.delete(person)
+            appDelegate.coreDataStack.managedObjectContext.delete(person)
         }
         self.LoadOwnerData()
         tableView.reloadData()

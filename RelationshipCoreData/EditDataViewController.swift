@@ -71,11 +71,7 @@ class EditDataViewController: UIViewController {
             self.updateFunction()
         }
         
-        do {
-            try appDelegate.persistentContainer.viewContext.save()
-        } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
-        }
+        appDelegate.coreDataStack.saveMainContext()
         self.shwoingSccessAlertMessage()
     }
     
@@ -108,10 +104,10 @@ class EditDataViewController: UIViewController {
             UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
-        guard let entity = NSEntityDescription.entity(forEntityName: "Device", in: appDelegate.persistentContainer.viewContext) else {
+        guard let entity = NSEntityDescription.entity(forEntityName: "Device", in: appDelegate.coreDataStack.managedObjectContext) else {
             fatalError("Could not find entiyu description")
         }
-            let device = Device.init(entity: entity, insertInto: appDelegate.persistentContainer.viewContext)
+            let device = Device.init(entity: entity, insertInto: appDelegate.coreDataStack.managedObjectContext)
             let deviceName = deviceCodeTextField.text ?? ""
             device.name = "Some Device #\(deviceName)"
             device.deviceType = deviceTypeTextField.text ?? ""

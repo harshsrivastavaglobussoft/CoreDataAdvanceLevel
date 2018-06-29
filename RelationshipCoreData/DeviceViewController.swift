@@ -40,7 +40,7 @@ class DeviceViewController: UIViewController {
             fetchRequest.predicate = filterPredicate
         }
         do {
-            if let resultsDevice = try appDelegate.persistentContainer.viewContext.fetch(fetchRequest) as? [Device]  {
+            if let resultsDevice = try appDelegate.coreDataStack.managedObjectContext.fetch(fetchRequest) as? [Device]  {
                 self.DeviceTableArray = resultsDevice
             }
         } catch {

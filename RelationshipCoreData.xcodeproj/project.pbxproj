@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9524819F20E611EE009E8E8B /* OwnerDevicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9524819E20E611EE009E8E8B /* OwnerDevicesViewController.swift */; };
+		952481A120E64708009E8E8B /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952481A020E64708009E8E8B /* CoreDataStack.swift */; };
 		9597277620E4B26A00E4F81D /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9597277220E4B26A00E4F81D /* User+CoreDataClass.swift */; };
 		9597277720E4B26A00E4F81D /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9597277320E4B26A00E4F81D /* User+CoreDataProperties.swift */; };
 		9597277820E4B26A00E4F81D /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9597277420E4B26A00E4F81D /* Device+CoreDataClass.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		9524819E20E611EE009E8E8B /* OwnerDevicesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerDevicesViewController.swift; sourceTree = "<group>"; };
+		952481A020E64708009E8E8B /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		9597277220E4B26A00E4F81D /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9597277320E4B26A00E4F81D /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9597277420E4B26A00E4F81D /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				95CED6E520E396F000362F94 /* OwnerViewController.swift */,
 				95CED6E720E3970100362F94 /* EditDataViewController.swift */,
 				9524819E20E611EE009E8E8B /* OwnerDevicesViewController.swift */,
+				952481A020E64708009E8E8B /* CoreDataStack.swift */,
 			);
 			path = RelationshipCoreData;
 			sourceTree = "<group>";
@@ -289,6 +292,7 @@
 				95CED6E420E396DF00362F94 /* DeviceViewController.swift in Sources */,
 				95CED6BB20E36C5400362F94 /* RelationshipCoreData.xcdatamodeld in Sources */,
 				9597277720E4B26A00E4F81D /* User+CoreDataProperties.swift in Sources */,
+				952481A120E64708009E8E8B /* CoreDataStack.swift in Sources */,
 				95CED6E820E3970100362F94 /* EditDataViewController.swift in Sources */,
 				95CED6B520E36C5400362F94 /* ViewController.swift in Sources */,
 				95CED6B320E36C5400362F94 /* AppDelegate.swift in Sources */,
