@@ -5,14 +5,14 @@
 //  Created by Sumit Ghosh on 27/06/18.
 //  Copyright © 2018 Sumit Ghosh. All rights reserved.
 //
-
+//Used NSFetchResultController
 import UIKit
 import CoreData
 
 class DeviceViewController: UIViewController {
 
     @IBOutlet weak var deviceTableView: UITableView!
-    var DeviceTableArray = [Device]()
+    var fetchedResultController: NSFetchedResultsController<NSFetchRequestResult>!
     var selectedDevice:Device! = nil
     
     //StoryBoard data Sugue ID
@@ -23,30 +23,33 @@ class DeviceViewController: UIViewController {
     //MARK: view did load
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
+        fetchRequest.sortDescriptors = [
+            NSSortDescriptor.init(key: "deviceType.name", ascending: true),
+            NSSortDescriptor.init(key: "name", ascending: true)
+        ]
+        self.fetchedResultController = NSFetchedResultsController.init(fetchRequest: fetchRequest, managedObjectContext: appDelegate.coreDataStack.managedObjectContext, sectionNameKeyPath: nil, cacheName: nil)
+        
         self.deviceTableView.delegate = self
         self.deviceTableView.dataSource = self
     }
     
     //MARK: Fetch Data From COREDATA model Devices
     func LoadData(deviceTypeFilter: String? = nil) -> Void {
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Device")
         if let deviceTypeFilter = deviceTypeFilter {
             let filterPredicate = NSPredicate(format: "deviceType =[c] %@",deviceTypeFilter)
-            fetchRequest.predicate = filterPredicate
+            fetchedResultController.fetchRequest.predicate = filterPredicate
         }
         do {
-            if let resultsDevice = try appDelegate.coreDataStack.managedObjectContext.fetch(fetchRequest) as? [Device]  {
-                self.DeviceTableArray = resultsDevice
-            }
+            try fetchedResultController.performFetch()
         } catch {
-            print("Cannot fetch device")
+            fatalError("There was an error fetching the list of devices")
         }
-        
         self.deviceTableView.reloadData()
     }
     
@@ -106,11 +109,11 @@ extension DeviceViewController: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return self.DeviceTableArray.count
+            return self.fetchedResultController.sections?[section].numberOfObjects ?? 0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.selectedDevice = self.DeviceTableArray[indexPath.row]
+        self.selectedDevice = self.fetchedResultController.object(at: indexPath) as! Device
         performSegue(withIdentifier: StoryBoardID.EDITSCREEN, sender: Device?.self)
     }
     
@@ -121,10 +124,12 @@ extension DeviceViewController: UITableViewDelegate,UITableViewDataSource {
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell")
         }
-        let deviceType = self.DeviceTableArray[indexPath.row].deviceType
-        let name = self.DeviceTableArray[indexPath.row].name
-        let owner = self.DeviceTableArray[indexPath.row].owner?.name ?? ""
-        cell?.textLabel?.text = "\(name) \(deviceType)"
+        
+        let device = self.fetchedResultController.object(at: indexPath) as! Device
+        let deviceType = device.deviceType
+        let name = device.name
+        let owner = device.owner?.name ?? ""
+        cell?.textLabel?.text = "\(name) \(String(describing: deviceType))"
         cell?.detailTextLabel?.text = "Owner: \(owner)"
         return cell!
     }

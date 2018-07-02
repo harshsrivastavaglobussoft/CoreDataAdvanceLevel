@@ -105,7 +105,15 @@ class OwnerViewController: UIViewController {
             let device_user = User.init(entity: userEntity, insertInto: appDelegate.coreDataStack.managedObjectContext)
             device_user.name = Name
         
-        appDelegate.coreDataStack.saveMainContext()
+        //Validation added and handling the error
+        do {
+            try appDelegate.coreDataStack.managedObjectContext.save()
+        }catch{
+            appDelegate.coreDataStack.managedObjectContext.delete(device_user)
+            let alert = UIAlertController(title: "Error", message: "Owner name must be longer than two characters!", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler:nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         self.LoadOwnerData()
         self.ownerTableView.reloadData()
      }
@@ -121,6 +129,7 @@ class OwnerViewController: UIViewController {
     }
 }
 
+//MARK: Tableview delegates and datasource 
 extension OwnerViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

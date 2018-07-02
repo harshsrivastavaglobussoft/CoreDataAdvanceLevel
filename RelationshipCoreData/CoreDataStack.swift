@@ -36,7 +36,7 @@ class CoreDataStack: NSObject {
         let persistentStoreURL = self.applicationDocumentDirectoty.appendingPathComponent("\(CoreDataStack.moduleName).sqlite")//Creating or accessing the persistent store
         
         do{
-            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: persistentStoreURL, options: [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]) //adding the persistent store in persistent container
+            try coordinator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: persistentStoreURL, options: [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: false]) //adding the persistent store in persistent container
         }catch{
             fatalError("Persistent Store error! \(error)")
         }
@@ -51,6 +51,7 @@ class CoreDataStack: NSObject {
     }()
     
     //MARK: Save ManagedObjectContext
+    //If the Managed object context has some changes it saves the changes 
     func saveMainContext() -> Void {
         if managedObjectContext.hasChanges {
             do {

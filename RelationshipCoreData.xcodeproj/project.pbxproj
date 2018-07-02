@@ -12,6 +12,11 @@
 		9597277620E4B26A00E4F81D /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9597277220E4B26A00E4F81D /* User+CoreDataClass.swift */; };
 		9597277720E4B26A00E4F81D /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9597277320E4B26A00E4F81D /* User+CoreDataProperties.swift */; };
 		9597277820E4B26A00E4F81D /* Device+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9597277420E4B26A00E4F81D /* Device+CoreDataClass.swift */; };
+		959EFF5520E765E2008E321E /* PrivacyaccessManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959EFF5420E765E2008E321E /* PrivacyaccessManager.swift */; };
+		95A1681220EA0C220052B37A /* DeviceType+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A1681020EA0C220052B37A /* DeviceType+CoreDataClass.swift */; };
+		95A1681320EA0C220052B37A /* DeviceType+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A1681120EA0C220052B37A /* DeviceType+CoreDataProperties.swift */; };
+		95A1681520EA0F0C0052B37A /* ModelV1-V2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 95A1681420EA0F0C0052B37A /* ModelV1-V2.xcmappingmodel */; };
+		95A1681720EA168F0052B37A /* MigrationVer1ToVer2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A1681620EA168F0052B37A /* MigrationVer1ToVer2.swift */; };
 		95A8063A20E600D300C1E526 /* Device+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A8063920E600D300C1E526 /* Device+CoreDataProperties.swift */; };
 		95CED6B320E36C5400362F94 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CED6B220E36C5400362F94 /* AppDelegate.swift */; };
 		95CED6B520E36C5400362F94 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CED6B420E36C5400362F94 /* ViewController.swift */; };
@@ -49,6 +54,12 @@
 		9597277220E4B26A00E4F81D /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataClass.swift"; sourceTree = "<group>"; };
 		9597277320E4B26A00E4F81D /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9597277420E4B26A00E4F81D /* Device+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataClass.swift"; sourceTree = "<group>"; };
+		959EFF5420E765E2008E321E /* PrivacyaccessManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyaccessManager.swift; sourceTree = "<group>"; };
+		95A1680F20EA0A0B0052B37A /* RelationshipCoreData 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "RelationshipCoreData 2.xcdatamodel"; sourceTree = "<group>"; };
+		95A1681020EA0C220052B37A /* DeviceType+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DeviceType+CoreDataClass.swift"; sourceTree = "<group>"; };
+		95A1681120EA0C220052B37A /* DeviceType+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DeviceType+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		95A1681420EA0F0C0052B37A /* ModelV1-V2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = "ModelV1-V2.xcmappingmodel"; sourceTree = "<group>"; };
+		95A1681620EA168F0052B37A /* MigrationVer1ToVer2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationVer1ToVer2.swift; sourceTree = "<group>"; };
 		95A8063920E600D300C1E526 /* Device+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Device+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		95CED6AF20E36C5400362F94 /* RelationshipCoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RelationshipCoreData.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95CED6B220E36C5400362F94 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +128,8 @@
 		95CED6B120E36C5400362F94 /* RelationshipCoreData */ = {
 			isa = PBXGroup;
 			children = (
+				95A1681020EA0C220052B37A /* DeviceType+CoreDataClass.swift */,
+				95A1681120EA0C220052B37A /* DeviceType+CoreDataProperties.swift */,
 				95A8063920E600D300C1E526 /* Device+CoreDataProperties.swift */,
 				9597277220E4B26A00E4F81D /* User+CoreDataClass.swift */,
 				9597277320E4B26A00E4F81D /* User+CoreDataProperties.swift */,
@@ -128,11 +141,14 @@
 				95CED6BE20E36C5400362F94 /* LaunchScreen.storyboard */,
 				95CED6C120E36C5400362F94 /* Info.plist */,
 				95CED6B920E36C5400362F94 /* RelationshipCoreData.xcdatamodeld */,
+				95A1681420EA0F0C0052B37A /* ModelV1-V2.xcmappingmodel */,
 				95CED6E320E396DF00362F94 /* DeviceViewController.swift */,
+				959EFF5420E765E2008E321E /* PrivacyaccessManager.swift */,
 				95CED6E520E396F000362F94 /* OwnerViewController.swift */,
 				95CED6E720E3970100362F94 /* EditDataViewController.swift */,
 				9524819E20E611EE009E8E8B /* OwnerDevicesViewController.swift */,
 				952481A020E64708009E8E8B /* CoreDataStack.swift */,
+				95A1681620EA168F0052B37A /* MigrationVer1ToVer2.swift */,
 			);
 			path = RelationshipCoreData;
 			sourceTree = "<group>";
@@ -290,6 +306,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				95CED6E420E396DF00362F94 /* DeviceViewController.swift in Sources */,
+				95A1681220EA0C220052B37A /* DeviceType+CoreDataClass.swift in Sources */,
+				95A1681320EA0C220052B37A /* DeviceType+CoreDataProperties.swift in Sources */,
+				959EFF5520E765E2008E321E /* PrivacyaccessManager.swift in Sources */,
+				95A1681720EA168F0052B37A /* MigrationVer1ToVer2.swift in Sources */,
 				95CED6BB20E36C5400362F94 /* RelationshipCoreData.xcdatamodeld in Sources */,
 				9597277720E4B26A00E4F81D /* User+CoreDataProperties.swift in Sources */,
 				952481A120E64708009E8E8B /* CoreDataStack.swift in Sources */,
@@ -298,6 +318,7 @@
 				95CED6B320E36C5400362F94 /* AppDelegate.swift in Sources */,
 				9597277820E4B26A00E4F81D /* Device+CoreDataClass.swift in Sources */,
 				95A8063A20E600D300C1E526 /* Device+CoreDataProperties.swift in Sources */,
+				95A1681520EA0F0C0052B37A /* ModelV1-V2.xcmappingmodel in Sources */,
 				9524819F20E611EE009E8E8B /* OwnerDevicesViewController.swift in Sources */,
 				95CED6E620E396F000362F94 /* OwnerViewController.swift in Sources */,
 				9597277620E4B26A00E4F81D /* User+CoreDataClass.swift in Sources */,
@@ -603,9 +624,10 @@
 		95CED6B920E36C5400362F94 /* RelationshipCoreData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				95A1680F20EA0A0B0052B37A /* RelationshipCoreData 2.xcdatamodel */,
 				95CED6BA20E36C5400362F94 /* RelationshipCoreData.xcdatamodel */,
 			);
-			currentVersion = 95CED6BA20E36C5400362F94 /* RelationshipCoreData.xcdatamodel */;
+			currentVersion = 95A1680F20EA0A0B0052B37A /* RelationshipCoreData 2.xcdatamodel */;
 			path = RelationshipCoreData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

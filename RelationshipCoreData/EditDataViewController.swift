@@ -8,19 +8,23 @@
 
 import UIKit
 import CoreData
+import Photos
 
-class EditDataViewController: UIViewController {
+class EditDataViewController: UIViewController ,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var deviceCodeTextField: UITextField!
     @IBOutlet weak var deviceTypeTextField: UITextField!
     @IBOutlet weak var ownerLabel: UILabel!
     @IBOutlet weak var purchaseDateTextField: UITextField!
     @IBOutlet weak var osversionTextField: UITextField!
+    @IBOutlet weak var deviceImage: UIImageView!
     
     var selectedDevice: Device?
     var deviceCode:String?
     var deviceType:String?
     var user:User?
+    let imagePicker = UIImagePickerController()
+
     
     struct StoryBoardIDS {
        static let OWNERLIST = "ownerLink"
@@ -29,8 +33,11 @@ class EditDataViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        imagePicker.delegate = self
+        
+        
         if selectedDevice != nil {
-            deviceType = selectedDevice?.deviceType
+           // deviceType = selectedDevice?.deviceType
             deviceCode = selectedDevice?.name
             self.deviceCodeTextField.text = deviceCode
             self.deviceTypeTextField.text = deviceType
@@ -45,6 +52,22 @@ class EditDataViewController: UIViewController {
                 self.purchaseDateTextField.placeholder = "Please enter Date"
             }else{
                 self.purchaseDateTextField.text = selectedDevice?.purchaseDate
+            }
+            if selectedDevice?.image == nil {
+                
+            }else{
+                self.deviceImage.image = UIImage.init(data: selectedDevice?.image! as! Data)
+            }
+            
+            guard let appDelegate =
+                UIApplication.shared.delegate as? AppDelegate else {
+                    return
+            }
+            appDelegate.coreDataStack.managedObjectContext.refresh(selectedDevice!, mergeChanges: true)
+            if let birthdayBuddies = selectedDevice?.value(forKey: "purchaseOnSameDate") as? [Device] {
+                for birthdayBuddy in birthdayBuddies {
+                    print("Birthday buddy! - \(birthdayBuddy.name)")
+                }
             }
         }
 
@@ -92,10 +115,11 @@ class EditDataViewController: UIViewController {
     //MARK: Update Operation in coredata using NSManagedObjectContext
     func updateFunction() -> Void {
         self.selectedDevice?.name = self.deviceCodeTextField.text ?? ""
-        self.selectedDevice?.deviceType = self.deviceTypeTextField.text ?? ""
+        //self.selectedDevice?.deviceType = self.deviceTypeTextField.text ?? ""
         self.selectedDevice?.owner = self.user
         self.selectedDevice?.osVersion = self.osversionTextField.text ?? ""
         self.selectedDevice?.purchaseDate = self.purchaseDateTextField.text ?? ""
+        self.selectedDevice?.image = UIImageJPEGRepresentation(self.deviceImage.image!, 0.7)! as NSData; // 0.7 is JPG quality
     }
     
     //MARK: Insert Operation in coredata using NSManagedObjectContext
@@ -110,12 +134,61 @@ class EditDataViewController: UIViewController {
             let device = Device.init(entity: entity, insertInto: appDelegate.coreDataStack.managedObjectContext)
             let deviceName = deviceCodeTextField.text ?? ""
             device.name = "Some Device #\(deviceName)"
-            device.deviceType = deviceTypeTextField.text ?? ""
+            //device.deviceType = deviceTypeTextField.text ?? ""
             device.owner = self.user
             device.purchaseDate = self.purchaseDateTextField.text ?? ""
             device.osVersion = self.osversionTextField.text ?? ""
+            device.image = UIImageJPEGRepresentation(self.deviceImage.image!, 0.7)! as NSData;
     }
     
+    @IBAction func SelectImageButtonAction(_ sender: Any) {
+        let status = PHPhotoLibrary.authorizationStatus()
+        print("\(status)")
+        
+        if (status == PHAuthorizationStatus.authorized) {
+            imagePicker.allowsEditing = false
+            imagePicker.sourceType = .photoLibrary
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+            
+        else if (status == PHAuthorizationStatus.denied) {
+            print("Not approved image")
+        }
+            
+        else if (status == PHAuthorizationStatus.notDetermined) {
+            
+            // Access has not been determined.
+            PHPhotoLibrary.requestAuthorization({ (newStatus) in
+                
+                if (newStatus == PHAuthorizationStatus.authorized) {
+                    self.imagePicker.allowsEditing = false
+                    self.imagePicker.sourceType = .photoLibrary
+                    self.present(self.imagePicker, animated: true, completion: nil)
+                }
+                else {
+                    print("Not approved image")
+                }
+            })
+        }
+        else if (status == PHAuthorizationStatus.restricted) {
+            // Restricted access - normally won't happen.
+        }
+
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])  {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            deviceImage.contentMode = .scaleAspectFit
+            deviceImage.image = pickedImage
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -123,6 +196,7 @@ class EditDataViewController: UIViewController {
     }
 }
 
+//MARK: Owner selection delegate
 extension EditDataViewController:OwnerSelectionDelegate {
     func selectedOwner(selectedUser: User, Controller: UIViewController) {
         self.user = selectedUser
@@ -130,3 +204,4 @@ extension EditDataViewController:OwnerSelectionDelegate {
         Controller.navigationController?.popViewController(animated: true)
     }
 }
+

@@ -67,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         for i in 1...10 {
             let device = Device.init(entity: entity, insertInto: coreDataStack.managedObjectContext)
             device.name = "Some Device #\(i)"
-            device.deviceType = i % 3 == 0 ? "Watch" : "iPhone"
+            //device.deviceType = i % 3 == 0 ? "Watch" : "iPhone"
             device.osVersion = i % 3 == 0 ? "watchOS 4.6" : "iOS 11.3"
         }
     }
